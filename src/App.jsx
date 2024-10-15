@@ -1,13 +1,14 @@
 import "./App.scss";
 import CurrencyConverterBody from "./components/CurrencyConverterBody";
-import CurrencyConverterHeader from "./components/Header";
+import CurrencyConverterContainer from "./components/CurrencyConverterContainer";
+import CurrencyConverterHeader from "./components/CurrencyConverterHeader";
 
 function App() {
   return (
-    <section>
+    <CurrencyConverterContainer>
       <CurrencyConverterHeader />
       <CurrencyConverterBody />
-    </section>
+    </CurrencyConverterContainer>
   );
 }
 

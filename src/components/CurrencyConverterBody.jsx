@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 function CurrencyConverterBody() {
   const [amount, setAmount] = useState("");
   const [from, setFrom] = useState("IRR");
   const [to, setTo] = useState("IRR");
-  const [convertedAmount, setConvertedAmount] = useState("");
+
   const handleAmount = (e) => {
     setAmount(e.target.value);
   };
@@ -16,15 +16,14 @@ function CurrencyConverterBody() {
     console.log(e.target.value);
     setTo(e.target.value);
   };
-  useEffect(() => {
+  
+  const convertedAmount = useMemo(() => {
     if (from === "IRR" && to === "USD") {
-      return setConvertedAmount(() => amount / 420000);
+      return amount / 420000;
     } else if (from === "USD" && to === "IRR") {
-      return setConvertedAmount(() => amount * 420000);
+      return amount * 420000;
     } else if (from === to) {
-      return setConvertedAmount(amount);
-    } else {
-      setConvertedAmount("error");
+      return amount;
     }
   }, [amount, from, to]);
 

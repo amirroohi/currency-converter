@@ -16,8 +16,9 @@ function CurrencyConverterBody() {
     console.log(e.target.value);
     setTo(e.target.value);
   };
-  
+
   const convertedAmount = useMemo(() => {
+    if (isNaN(amount)) return "لطفا به عدد وارد کنید!!!";
     if (from === "IRR" && to === "USD") {
       return amount / 420000;
     } else if (from === "USD" && to === "IRR") {

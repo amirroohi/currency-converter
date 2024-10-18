@@ -2,11 +2,15 @@ import { useMemo, useState } from "react";
 
 function CurrencyConverterBody() {
   const [amount, setAmount] = useState("");
+  const [rate, setRate] = useState("");
   const [from, setFrom] = useState("IRR");
   const [to, setTo] = useState("IRR");
 
   const handleAmount = (e) => {
     setAmount(e.target.value);
+  };
+  const handleRate = (e) => {
+    setRate(e.target.value);
   };
   const handleFrom = (e) => {
     console.log(e.target.value);
@@ -19,23 +23,31 @@ function CurrencyConverterBody() {
 
   const convertedAmount = useMemo(() => {
     if (isNaN(amount)) return "لطفا به عدد وارد کنید!!!";
+    if (rate==="") return "لطفا نرخ واحد دلار را وارد کنید!!!"
     if (from === "IRR" && to === "USD") {
-      return amount / 420000;
+      return amount / rate;
     } else if (from === "USD" && to === "IRR") {
-      return amount * 420000;
+      return amount * rate;
     } else if (from === to) {
       return amount;
     }
-  }, [amount, from, to]);
+  }, [amount, from, rate, to]);
 
   return (
     <main className="currencyConverter__body">
       <input
         className="currencyConverter__input-amount"
-        type="text"
+        type="number"
         value={amount}
         onChange={handleAmount}
-        placeholder=" مبلغ مورد نظر را وارد کنید..."
+        placeholder="مبلغ مورد نظر را وارد کنید"
+      />
+      <input
+        className="currencyConverter__input-rate"
+        type="number"
+        value={rate}
+        onChange={handleRate}
+        placeholder="نرخ واحد دلار را به ریال وارد کنید"
       />
       <SelectInput
         label="تبدیل از:"
@@ -49,7 +61,7 @@ function CurrencyConverterBody() {
         handleChange={handleTo}
         value={to}
       />
-      <div>
+      <div className="currencyConverter__result">
         مبلغ تبدیل شده:
         <h3>{convertedAmount}</h3>
       </div>
@@ -69,8 +81,12 @@ function SelectInput({ label, id, handleChange, value }) {
         onChange={handleChange}
         value={value}
       >
-        <option value="IRR">ریال</option>
-        <option value="USD">دلار</option>
+        <option className="currencyConverter__option" value="IRR">
+          ریال
+        </option>
+        <option className="currencyConverter__option" value="USD">
+          دلار
+        </option>
       </select>
     </div>
   );
